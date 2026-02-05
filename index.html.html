@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Will You Be My Valentine? ❤️</title>
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      font-family: 'Segoe UI', sans-serif;
+      overflow: hidden;
+    }
+
+    .card {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      max-width: 90%;
+      width: 360px;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+      color: #ff4d6d;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 30px;
+      color: #555;
+    }
+
+    .buttons {
+      position: relative;
+      height: 140px;
+    }
+
+    button {
+      padding: 12px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: transform 0.15s ease;
+      position: absolute;
+    }
+
+    #yes {
+      background: #ff4d6d;
+      color: white;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
+    }
+
+    #yes:hover { transform: translateX(-50%) scale(1.1); }
+
+    #no {
+      background: #ddd;
+      color: #555;
+      left: 50%;
+      top: 0;
+      transform: translateX(-50%);
+    }
+
+    .message {
+      margin-top: 20px;
+      font-size: 16px;
+      color: #ff4d6d;
+      min-height: 22px;
+    }
+
+    .love {
+      font-size: 22px;
+      color: #ff4d6d;
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card" id="card">
+    <h1>Vanshita 💖</h1>
+    <h2>Will you be my Valentine?</h2>
+
+    <div class="buttons" id="buttons">
+      <button id="no">No 🙃</button>
+      <button id="yes">Yes 💕</button>
+    </div>
+
+    <div class="message" id="msg"></div>
+    <div class="love" id="loveMsg">
+      Yay! I knew it 😍💘<br><br>
+      <iframe 
+        src="https://tenor.com/embed/13413443787685772689" 
+        width="220" 
+        height="220" 
+        frameborder="0" 
+        allowfullscreen
+        style="border-radius:12px;">
+      </iframe>
+    </div>
+  </div>
+
+  <script>
+    const noBtn = document.getElementById('no');
+    const yesBtn = document.getElementById('yes');
+    const msg = document.getElementById('msg');
+    const loveMsg = document.getElementById('loveMsg');
+    const buttons = document.getElementById('buttons');
+
+    const messages = [
+      "Are you sure? 😏",
+      "Think again 🙃",
+      "Really? 😳",
+      "Come on Vanshita 🥺",
+      "Last chance 😌",
+      "That button is broken 😜"
+    ];
+
+    function dodgeButton(e) {
+      const rect = buttons.getBoundingClientRect();
+      const btnRect = noBtn.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const btnX = btnRect.left - rect.left + btnRect.width / 2;
+      const btnY = btnRect.top - rect.top + btnRect.height / 2;
+
+      const distance = Math.hypot(x - btnX, y - btnY);
+
+      if (distance < 80) {
+        const maxX = rect.width - btnRect.width;
+        const maxY = rect.height - btnRect.height;
+
+        const newX = Math.random() * maxX;
+        const newY = Math.random() * maxY;
+
+        noBtn.style.left = `${newX}px`;
+        noBtn.style.top = `${newY}px`;
+
+        msg.textContent = messages[Math.floor(Math.random() * messages.length)];
+      }
+    }
+
+    buttons.addEventListener('mousemove', dodgeButton);
+    buttons.addEventListener('touchstart', dodgeButton);
+
+    yesBtn.addEventListener('click', () => {
+      msg.textContent = "";
+      loveMsg.style.display = 'block';
+    });
+  </script>
+
+</body>
+</html>
